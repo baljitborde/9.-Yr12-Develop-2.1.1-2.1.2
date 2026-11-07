@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Bases &amp; Units – Year 12 Develop Task | Pearson Edexcel IAS</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;padding:0;background:#f5f5f5;font-family:'Lato',sans-serif;font-size:14pt;color:#333333;line-height:1.65;}
+
+.opt{display:block;font-family:'Lato',sans-serif;font-size:14pt;padding:11px 18px;border:2px solid #d0d0d0;border-radius:6px;background:#ffffff;color:#333333;cursor:pointer;margin-bottom:10px;line-height:1.4;user-select:none;-webkit-user-select:none;transition:background 0.12s,border-color 0.12s;}
+.opt:hover{background:#e3f2fd;border-color:#007BA6;}
+.opt.correct{background:#e8f5e9!important;border-color:#388e3c!important;color:#1b5e20!important;font-weight:700;pointer-events:none;cursor:default;}
+.opt.wrong{background:#ffebee!important;border-color:#C62828!important;color:#7f0000!important;pointer-events:none;cursor:default;}
+.opt.reveal{background:#e8f5e9!important;border-color:#388e3c!important;color:#1b5e20!important;font-weight:700;pointer-events:none;cursor:default;}
+.opt.locked{pointer-events:none;cursor:default;}
+
+.fb{display:none;font-family:'Lato',sans-serif;font-size:14pt;line-height:1.65;padding:14px 18px;border-radius:6px;margin-top:14px;}
+.fb-ok{background:#e8f5e9;color:#1b5e20;border:1px solid #81c784;}
+.fb-bad{background:#ffebee;color:#7f0000;border:1px solid #ef9a9a;}
+
+.match-row{display:grid;grid-template-columns:230px 1fr;gap:8px;margin-bottom:8px;align-items:center;}
+.match-term{font-family:'Lato',sans-serif;font-size:12.5pt;font-weight:700;padding:9px 12px;background:#1e1e2e;border-radius:6px;color:#a6e3a1;text-align:center;line-height:1.4;}
+.match-sel{font-family:'Lato',sans-serif;font-size:13pt;padding:9px 12px;border:2px solid #d0d0d0;border-radius:6px;background:#fff;color:#333;width:100%;cursor:pointer;}
+.match-row.ok .match-sel{background:#e8f5e9;border-color:#388e3c;color:#1b5e20;}
+.match-row.bad .match-sel{background:#ffebee;border-color:#C62828;color:#7f0000;}
+.btn{display:inline-block;font-family:'Lato',sans-serif;font-size:12pt;font-weight:700;padding:8px 22px;border:2px solid #007BA6;border-radius:6px;background:#007BA6;color:#fff;cursor:pointer;margin-top:12px;margin-right:8px;}
+.btn:hover{background:#005f80;}
+.btn:disabled{background:#b3d4e8;border-color:#b3d4e8;cursor:default;}
+.btn.alt{background:#fff;color:#007BA6;}
+.btn.alt:hover{background:#e3f2fd;}
+.result{display:none;font-family:'Lato',sans-serif;font-size:14pt;line-height:1.65;padding:14px 18px;border-radius:6px;margin-top:12px;}
+
+code{font-family:'Courier New',monospace;background:#f0f0f0;padding:1px 6px;border-radius:3px;font-size:13pt;}
+kbd{font-family:'Courier New',monospace;font-size:12pt;background:#fff;border:1px solid #999;border-bottom-width:3px;border-radius:4px;padding:1px 7px;}
+.mono{font-family:'Courier New',monospace;font-weight:700;}
+.cx-tbl{border-collapse:collapse;width:100%;font-size:13pt;}
+.cx-tbl th{background:#007BA6;color:#fff;padding:9px 14px;border:1px solid #005f80;text-align:center;}
+.cx-tbl td{border:1px solid #d0d0d0;padding:8px 12px;text-align:left;vertical-align:top;background:#fff;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.g2>*{min-width:0;}
+.mission{background:#fff3e0;border:2px solid #e65100;border-radius:8px;padding:14px 18px;margin-bottom:16px;}
+.mission-h{font-weight:700;color:#e65100;font-size:13pt;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px;}
+.search{display:inline-block;background:#fff;border:1px solid #e65100;color:#e65100;border-radius:20px;padding:2px 12px;font-size:11.5pt;font-weight:700;margin:3px 4px 3px 0;}
+.lbl{font-size:12.5pt;font-weight:700;color:#333;margin:10px 0 4px;}
+input.inp,textarea.inp{width:100%;font-family:'Lato',sans-serif;font-size:13pt;padding:9px 12px;border:2px solid #d0d0d0;border-radius:6px;line-height:1.5;background:#fff;}
+textarea.inp{min-height:80px;resize:vertical;}
+textarea.big{min-height:200px;}
+.inp:focus{outline:none;border-color:#007BA6;}
+input.num{width:110px;font-family:'Courier New',monospace;font-size:13pt;font-weight:700;padding:7px 10px;border:2px solid #d0d0d0;border-radius:6px;text-align:center;}
+input.num:focus{outline:none;border-color:#007BA6;}
+input.num.ok{border-color:#388e3c;background:#e8f5e9;color:#1b5e20;}
+input.num.bad{border-color:#C62828;background:#ffebee;color:#7f0000;}
+.notes{display:none;background:#f0f8f0;border:2px solid #388e3c;border-radius:6px;padding:14px 18px;margin-top:12px;font-size:13pt;}
+.notes-h{font-weight:700;color:#388e3c;font-size:13.5pt;margin-bottom:6px;}
+.chk{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;}
+.chk input{width:20px;height:20px;margin-top:4px;flex-shrink:0;}
+
+/* colour decoder */
+.swatches{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0 14px;}
+.sw{text-align:center;font-size:11.5pt;font-weight:700;}
+.sw div{width:120px;height:70px;border-radius:8px;border:2px solid #333;margin-bottom:4px;}
+.rgb-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px;padding:10px 14px;background:#fff;border:1px solid #d0d0d0;border-radius:6px;}
+.rgb-row label{font-size:12pt;font-weight:700;}
+
+/* lab */
+.sim{background:#1e1e2e;border-radius:8px;padding:18px 20px;color:#cdd6f4;}
+.sim-row{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;margin-bottom:12px;}
+.sim label{display:block;font-size:11pt;font-weight:700;color:#a6adc8;margin-bottom:4px;text-transform:uppercase;letter-spacing:0.04em;}
+.sim input,.sim select{font-family:'Courier New',monospace;font-size:13pt;padding:7px 10px;border-radius:6px;border:2px solid #45475a;background:#313244;color:#cdd6f4;width:120px;}
+.sim select{width:auto;font-family:'Lato',sans-serif;}
+.sim .btn{margin-top:0;}
+.lab-out{font-size:12.5pt;line-height:1.9;}
+.lab-out b{color:#f9e2af;font-family:'Courier New',monospace;}
+.lab-big{font-size:15pt;font-weight:700;color:#a6e3a1;margin-top:6px;}
+
+@media (max-width:720px){
+  .g2{grid-template-columns:1fr;}
+  .match-row{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body style="margin:0;padding:0;background:#f5f5f5;">
+<div style="max-width:960px;margin:0 auto;padding:0 0 80px;">
+
+<!-- HEADER -->
+<div style="background:#007BA6;padding:32px 40px 28px;">
+  <div style="font-size:11pt;font-weight:700;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;">Pearson Edexcel International AS Computer Science &bull; Unit 1 &bull; Topics 2.1.1 &amp; 2.1.2</div>
+  <div style="font-size:24pt;font-weight:700;color:#ffffff;margin:0 0 6px;">Number Bases &amp; Units of Measurement: Develop Task</div>
+  <div style="font-size:14pt;color:rgba(255,255,255,0.88);">Research &amp; investigate &nbsp;|&nbsp; Year 12 Computer Science</div>
+  <div style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;">
+    <span style="background:rgba(255,255,255,0.2);color:#fff;font-size:11pt;font-weight:700;padding:4px 14px;border-radius:20px;">&#9679; 30 minutes</span>
+    <span style="background:rgba(255,255,255,0.2);color:#fff;font-size:11pt;font-weight:700;padding:4px 14px;border-radius:20px;">&#9679; 4 research missions</span>
+    <span style="background:rgba(255,255,255,0.2);color:#fff;font-size:11pt;font-weight:700;padding:4px 14px;border-radius:20px;">&#9679; 9 activities</span>
+  </div>
+</div>
+
+<!-- INTRO -->
+<div style="background:#ffffff;border-bottom:1px solid #d0d0d0;padding:20px 40px;">
+  <div style="font-size:12pt;font-weight:700;color:#007BA6;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px;">How this task works</div>
+  <p style="margin:0 0 10px;font-size:13pt;">You are going to be a <strong>data detective</strong>. Number bases and units are not just exam topics — they are on every device you own. In each mission you will find them in the real world, record what you find, and then check your understanding. You will need the internet, your computer and a calculator.</p>
+  <div style="border-left:4px solid #e65100;background:#fff3e0;padding:10px 14px;border-radius:0 6px 6px 0;font-size:12.5pt;">
+    <strong style="color:#e65100;">Important:</strong> this page does <strong>not</strong> save your work. When you finish, use the <strong>Copy all my answers</strong> button at the bottom and paste your answers into your notes or hand-in.
+  </div>
+</div>
+
+<div style="padding:40px 40px 0;">
+
+<!-- ═══════════ MISSION 1 ═══════════ -->
+<div style="margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid #d0d0d0;">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #007BA6;">
+    <div style="min-width:36px;height:36px;border-radius:50%;background:#007BA6;color:#fff;font-size:14pt;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">1</div>
+    <div style="font-size:18pt;font-weight:700;color:#007BA6;">Mission 1: Hunting for Hexadecimal</div>
+    <div style="margin-left:auto;font-size:10pt;font-weight:700;color:#007BA6;background:#e3f2fd;padding:4px 12px;border-radius:20px;white-space:nowrap;border:1px solid #b3d4e8;flex-shrink:0;">&#9679; ~7 minutes</div>
+  </div>
+
+  <!-- Activity 1 — hex hunt -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;margin-bottom:18px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#128269; Activity 1 — Find hex on your own computer</div>
+    <div class="mission">
+      <div class="mission-h">Your mission</div>
+      <div style="font-size:13pt;">Find your computer's <strong>MAC address</strong> — the unique hardware address of its network card.<br>
+      <strong>Windows:</strong> press <kbd>Win</kbd> + <kbd>R</kbd>, type <code>cmd</code>, then type <code>ipconfig /all</code> and look for <em>Physical Address</em>.<br>
+      <strong>Mac:</strong> System Settings &rarr; Network &rarr; Wi-Fi &rarr; Details &rarr; Hardware (or <em>Wi-Fi Address</em>).<br>
+      <strong>Chromebook / no access?</strong> Use this example instead: <span class="mono">A4-5E-60-C2-19-D7</span></div>
+    </div>
+    <div class="lbl">a) Write down the MAC address you found.</div>
+    <input class="inp" data-q="1a MAC address" placeholder="e.g. A4-5E-60-C2-19-D7">
+    <div class="lbl">b) How many hex digits does it have? How many bits is that in total? Show how you worked it out.</div>
+    <input class="inp" data-q="1b Digits and bits" placeholder="e.g. ___ hex digits × ___ bits each = ___ bits">
+    <div class="lbl">c) Take the <strong>first pair</strong> of hex digits. Convert it to binary and to denary. Show your working.</div>
+    <textarea class="inp" data-q="1c First byte conversion" placeholder="Hex → binary (nibbles) → denary"></textarea>
+    <div class="lbl">d) Find one more place hex is used on your computer or online (e.g. a Windows error code, a website colour). Write it down and say what it is.</div>
+    <input class="inp" data-q="1d Other hex found" placeholder="e.g. 0x80070005 — a Windows error code">
+    <button class="btn alt" onclick="showNotes('n1')">&#128065; Compare with teacher notes</button>
+    <div class="notes" id="n1">
+      <div class="notes-h">Teacher notes — check your findings</div>
+      <ul style="margin:0;padding-left:1.2em;line-height:1.8;">
+        <li>A MAC address has <strong>12 hex digits</strong>, written as 6 pairs. Each hex digit is 4 bits, so it is <strong>12 &times; 4 = 48 bits</strong> (6 bytes — one byte per pair).</li>
+        <li>Example first pair <span class="mono">A4</span>: A = <span class="mono">1010</span>, 4 = <span class="mono">0100</span>, so <span class="mono">1010 0100</span> = 128 + 32 + 4 = <strong>164</strong>. Check: 10 &times; 16 + 4 = 164 &#10003;</li>
+        <li>Why hex? Writing 48 bits as 0s and 1s would be very long and easy to mistype. 12 hex digits are short, readable and convert straight back to binary.</li>
+        <li>Other places: Windows error/stop codes (e.g. <span class="mono">0x80070005</span>), colour codes in websites and design apps, memory addresses in error messages, and IPv6 addresses.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Activity 2 — colour decoder -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#127912; Activity 2 — Crack the colour codes</div>
+    <div class="mission">
+      <div class="mission-h">Background</div>
+      <div style="font-size:13pt;">A web colour code such as <span class="mono">#RRGGBB</span> is three bytes written in hex: the first pair is the amount of <strong>red</strong>, the second <strong>green</strong>, the third <strong>blue</strong>, each from 00 to FF (0 to 255). Search <span class="search">colour picker</span> to see a live tool showing both HEX and RGB.</div>
+    </div>
+    <div class="lbl" style="font-size:13.5pt;">a) Convert <span class="mono">#4CAF50</span> into denary red, green and blue values.</div>
+    <div class="rgb-row">
+      <label>R <input class="num" id="c1r" data-q="2a Red" oninput="previewColour()"></label>
+      <label>G <input class="num" id="c1g" data-q="2a Green" oninput="previewColour()"></label>
+      <label>B <input class="num" id="c1b" data-q="2a Blue" oninput="previewColour()"></label>
+    </div>
+    <div class="lbl" style="font-size:13.5pt;">b) The heading colour of this page is red 0, green 123, blue 166. Write it as a hex colour code.</div>
+    <div class="rgb-row"><label># <input class="num" id="c2" data-q="2b Hex code" style="width:150px;" oninput="previewColour()"></label></div>
+    <div class="swatches">
+      <div class="sw"><div style="background:#4CAF50;"></div>#4CAF50 (target)</div>
+      <div class="sw"><div id="sw1" style="background:#fff;"></div>Your RGB for (a)</div>
+      <div class="sw"><div id="sw2" style="background:#fff;"></div>Your hex for (b)</div>
+    </div>
+    <button class="btn" onclick="checkColours()">&#10003; Check my colours</button>
+    <div class="result" id="res2"></div>
+  </div>
+</div>
+
+<!-- ═══════════ MISSION 2 ═══════════ -->
+<div style="margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid #d0d0d0;">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #007BA6;">
+    <div style="min-width:36px;height:36px;border-radius:50%;background:#007BA6;color:#fff;font-size:14pt;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">2</div>
+    <div style="font-size:18pt;font-weight:700;color:#007BA6;">Mission 2: Units in the Real World</div>
+    <div style="margin-left:auto;font-size:10pt;font-weight:700;color:#007BA6;background:#e3f2fd;padding:4px 12px;border-radius:20px;white-space:nowrap;border:1px solid #b3d4e8;flex-shrink:0;">&#9679; ~8 minutes</div>
+  </div>
+
+  <!-- Activity 3 — research table -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;margin-bottom:18px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#128269; Activity 3 — Collect real measurements</div>
+    <div class="mission">
+      <div class="mission-h">Your mission</div>
+      <div style="font-size:13pt;margin-bottom:6px;">Find each value below, write it exactly as it is shown (number and unit), then decide whether it really uses <strong>binary</strong> (powers of 2) or <strong>decimal</strong> (powers of 10) prefixes. Suggested searches:</div>
+      <span class="search">UK broadband deals speed</span>
+      <span class="search">how much RAM does my computer have</span>
+      <span class="search">why does my hard drive show less space</span>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="cx-tbl" style="min-width:620px;">
+        <tr><th style="width:190px;">Item</th><th>Value and unit you found</th><th style="width:230px;">Binary or decimal? Why?</th></tr>
+        <tr><td><strong>A broadband deal's speed</strong></td><td><input class="inp" data-q="3 Broadband value"></td><td><input class="inp" data-q="3 Broadband type"></td></tr>
+        <tr><td><strong>Your computer's RAM</strong></td><td><input class="inp" data-q="3 RAM value"></td><td><input class="inp" data-q="3 RAM type"></td></tr>
+        <tr><td><strong>Your phone's or computer's advertised storage</strong></td><td><input class="inp" data-q="3 Storage value"></td><td><input class="inp" data-q="3 Storage type"></td></tr>
+        <tr><td><strong>The size of a photo or video file</strong> (right-click &rarr; Properties / Get Info)</td><td><input class="inp" data-q="3 File value"></td><td><input class="inp" data-q="3 File type"></td></tr>
+      </table>
+    </div>
+    <button class="btn alt" onclick="showNotes('n3')">&#128065; Compare with teacher notes</button>
+    <div class="notes" id="n3">
+      <div class="notes-h">Teacher notes — what you were likely to find</div>
+      <ul style="margin:0;padding-left:1.2em;line-height:1.8;">
+        <li><strong>Broadband:</strong> e.g. "150 Mbps" or "500 Mb". This is <strong>decimal</strong> — megabits per second, 10<sup>6</sup> bits each second. Note the lower-case b.</li>
+        <li><strong>RAM:</strong> e.g. "16 GB". RAM chips are built in powers of 2, so this is really <strong>16 GiB (binary)</strong>, even though it is usually labelled "GB".</li>
+        <li><strong>Storage:</strong> e.g. "256 GB" or "1 TB". Manufacturers use <strong>decimal</strong>: 1 GB = 10<sup>9</sup> bytes. That is why less space appears once you use it.</li>
+        <li><strong>File size:</strong> <strong>Windows</strong> shows "KB / MB / GB" but calculates with <strong>1024</strong> (binary). <strong>macOS</strong> (since 2009) shows sizes in <strong>decimal</strong> units. So the same file can show a different number on different computers!</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Activity 4 — MCQ correct=b -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;margin-bottom:18px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#10003; Activity 4 — Apply your research</div>
+    <div style="font-size:14pt;font-weight:700;color:#333;margin-bottom:14px;line-height:1.5;">Windows File Explorer says a document is <strong>"1.00 MB"</strong>. Using what you found about how Windows measures file sizes, how many bytes is the file really?</div>
+    <div id="opts4">
+      <div class="opt" onclick="pickOpt(4,'a',this)">a) 1 000 000 bytes</div>
+      <div class="opt" onclick="pickOpt(4,'b',this)">b) 1 048 576 bytes</div>
+      <div class="opt" onclick="pickOpt(4,'c',this)">c) 1 024 000 bytes</div>
+      <div class="opt" onclick="pickOpt(4,'d',this)">d) 8 388 608 bytes</div>
+    </div>
+    <div class="fb" id="fb4"></div>
+  </div>
+
+  <!-- Activity 5 — IEC history MCQ correct=c -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#128269; Activity 5 — Why do kibi and mebi exist?</div>
+    <div class="mission">
+      <div class="mission-h">Your mission</div>
+      <div style="font-size:13pt;margin-bottom:6px;">The prefixes kibi, mebi, gibi and tebi were created by the International Electrotechnical Commission (IEC) in 1998. Find out why.</div>
+      <span class="search">IEC binary prefixes 1998 kibibyte</span>
+    </div>
+    <div class="lbl">Summarise the reason in your own words (1–2 sentences):</div>
+    <textarea class="inp" data-q="5 IEC reason"></textarea>
+    <div style="font-size:14pt;font-weight:700;color:#333;margin:16px 0 14px;line-height:1.5;">Which explanation matches what you found?</div>
+    <div id="opts5">
+      <div class="opt" onclick="pickOpt(5,'a',this)">a) Computers switched from denary to binary in 1998, so new prefixes were needed</div>
+      <div class="opt" onclick="pickOpt(5,'b',this)">b) To make storage devices cheaper to manufacture</div>
+      <div class="opt" onclick="pickOpt(5,'c',this)">c) "Kilo", "mega" and so on were being used to mean both 1000 and 1024, so separate binary prefixes removed the confusion</div>
+      <div class="opt" onclick="pickOpt(5,'d',this)">d) To replace hexadecimal as a way of writing large numbers</div>
+    </div>
+    <div class="fb" id="fb5"></div>
+  </div>
+</div>
+
+<!-- ═══════════ MISSION 3 ═══════════ -->
+<div style="margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid #d0d0d0;">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #007BA6;">
+    <div style="min-width:36px;height:36px;border-radius:50%;background:#007BA6;color:#fff;font-size:14pt;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">3</div>
+    <div style="font-size:18pt;font-weight:700;color:#007BA6;">Mission 3: Download Lab</div>
+    <div style="margin-left:auto;font-size:10pt;font-weight:700;color:#007BA6;background:#e3f2fd;padding:4px 12px;border-radius:20px;white-space:nowrap;border:1px solid #b3d4e8;flex-shrink:0;">&#9679; ~9 minutes</div>
+  </div>
+
+  <!-- Activity 6 — lab -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;margin-bottom:18px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#129514; Activity 6 — Download time experiment</div>
+    <div class="mission">
+      <div class="mission-h">Your mission</div>
+      <div style="font-size:13pt;"><strong>Research question:</strong> how do file size, connection speed and the choice of prefix affect download time? <strong>Work each one out on paper first</strong>, then use the lab to check your working. Record your answers to <strong>1 decimal place</strong>.</div>
+    </div>
+
+    <div class="sim">
+      <div class="sim-row">
+        <div><label>File size</label><input type="number" id="fs" value="700" min="0" step="any"></div>
+        <div><label>Unit</label><select id="fu"><option value="1">bytes (B)</option><option value="1024">KiB</option><option value="1048576" selected>MiB</option><option value="1073741824">GiB</option><option value="1000">kB</option><option value="1000000">MB</option><option value="1000000000">GB</option></select></div>
+        <div><label>Speed</label><input type="number" id="sp" value="50" min="0" step="any"></div>
+        <div><label>Unit</label><select id="su"><option value="1000">kbps</option><option value="1000000" selected>Mbps</option><option value="1000000000">Gbps</option></select></div>
+        <button class="btn" onclick="runLab()">&#9654; Calculate</button>
+      </div>
+      <div class="lab-out" id="labOut"><span style="color:#a6adc8;">Set a file size and a speed, then press Calculate to see each step.</span></div>
+    </div>
+
+    <div class="lbl" style="margin-top:18px;font-size:14pt;">Record your results (seconds, to 1 decimal place):</div>
+    <div style="overflow-x:auto;">
+      <table class="cx-tbl" style="max-width:700px;">
+        <tr><th>Test</th><th style="width:150px;">Time (s)</th></tr>
+        <tr><td>1. A 700 MiB film on a 50 Mbps connection</td><td><input class="num" id="r1" data-q="6 Test 1"></td></tr>
+        <tr><td>2. The same film on a 1 Gbps (full fibre) connection</td><td><input class="num" id="r2" data-q="6 Test 2"></td></tr>
+        <tr><td>3. A 4 GiB game on an 80 Mbps connection</td><td><input class="num" id="r3" data-q="6 Test 3"></td></tr>
+        <tr><td>4. How many seconds too short is test 3 if someone wrongly treats 4 GiB as 4 GB?</td><td><input class="num" id="r4" data-q="6 Test 4"></td></tr>
+      </table>
+    </div>
+    <button class="btn" onclick="checkLab()">&#10003; Check my results</button>
+    <div class="result" id="res6"></div>
+  </div>
+
+  <!-- Activity 7 — MCQ correct=c -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#10003; Activity 7 — Draw a conclusion</div>
+    <div style="font-size:14pt;font-weight:700;color:#333;margin-bottom:14px;line-height:1.5;">Which conclusion is supported by <u>your</u> results?</div>
+    <div id="opts7">
+      <div class="opt" onclick="pickOpt(7,'a',this)">a) Making the connection 20 times faster made the download 20 times slower</div>
+      <div class="opt" onclick="pickOpt(7,'b',this)">b) Treating GiB as GB made no difference to the download time</div>
+      <div class="opt" onclick="pickOpt(7,'c',this)">c) Download time is inversely proportional to speed, and mixing up GiB and GB gave an error of about 7%</div>
+      <div class="opt" onclick="pickOpt(7,'d',this)">d) Download time depends only on the file size, not on the connection speed</div>
+    </div>
+    <div class="fb" id="fb7"></div>
+  </div>
+</div>
+
+<!-- ═══════════ MISSION 4 ═══════════ -->
+<div style="margin-bottom:40px;">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:2px solid #007BA6;">
+    <div style="min-width:36px;height:36px;border-radius:50%;background:#007BA6;color:#fff;font-size:14pt;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">4</div>
+    <div style="font-size:18pt;font-weight:700;color:#007BA6;">Mission 4: Bits, States and Explaining</div>
+    <div style="margin-left:auto;font-size:10pt;font-weight:700;color:#007BA6;background:#e3f2fd;padding:4px 12px;border-radius:20px;white-space:nowrap;border:1px solid #b3d4e8;flex-shrink:0;">&#9679; ~6 minutes</div>
+  </div>
+
+  <!-- Activity 8 — match bits to states -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;margin-bottom:18px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#9654; Activity 8 — How many states in real systems?</div>
+    <div class="mission">
+      <div class="mission-h">Your mission</div>
+      <div style="font-size:13pt;margin-bottom:6px;">Each system below uses a fixed number of bits. Work out 2<sup>n</sup> for each one, then match it. If you get stuck, research it:</div>
+      <span class="search">how many IPv4 addresses are there</span>
+      <span class="search">how many colours in 24-bit colour</span>
+    </div>
+    <div style="font-size:14pt;font-weight:700;color:#333;margin-bottom:14px;">Use the dropdowns. One answer is not needed.</div>
+    <div id="match1">
+      <div class="match-row"><div class="match-term">7-bit ASCII code</div><select class="match-sel" data-ans="ascii"></select></div>
+      <div class="match-row"><div class="match-term">8-bit greyscale pixel</div><select class="match-sel" data-ans="grey"></select></div>
+      <div class="match-row"><div class="match-term">16-bit audio sample</div><select class="match-sel" data-ans="audio"></select></div>
+      <div class="match-row"><div class="match-term">24-bit colour</div><select class="match-sel" data-ans="col"></select></div>
+      <div class="match-row"><div class="match-term">32-bit IPv4 address</div><select class="match-sel" data-ans="ip"></select></div>
+    </div>
+    <button class="btn" id="match1-btn" onclick="checkMatch1()">&#10003; Check my answers</button>
+    <div class="result" id="match1-res"></div>
+  </div>
+
+  <!-- Activity 9 — explanation -->
+  <div style="background:#fafafa;border:1px solid #d0d0d0;border-radius:6px;padding:18px 22px;">
+    <div style="font-size:11pt;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:#00796B;margin-bottom:10px;">&#9998; Activity 9 — Write your explanation (6 marks)</div>
+    <div style="font-size:14pt;font-weight:700;color:#333;margin-bottom:10px;line-height:1.5;">A customer emails a computer shop with two complaints:</div>
+    <div style="background:#fff;border-left:4px solid #9966FF;padding:10px 14px;border-radius:0 6px 6px 0;font-size:13.5pt;margin-bottom:12px;font-style:italic;">"My new laptop has a <strong>2 TB</strong> SSD but Windows says it is only <strong>1.81 TB</strong>. And I pay for <strong>100 Mbps</strong> broadband, but my downloads never go faster than about <strong>12 MB/s</strong>. I think I've been cheated twice!"</div>
+    <div style="font-size:14pt;color:#333;margin-bottom:12px;">Write a reply that explains, with calculations, why the laptop and the broadband are both working as they should.</div>
+    <textarea class="inp big" data-q="9 Explanation" placeholder="Write your reply here..."></textarea>
+    <button class="btn" onclick="showNotes('model')">&#128065; Show the mark scheme and model answer</button>
+    <div class="notes" id="model">
+      <div class="notes-h">Mark scheme — tick each point you made (1 mark each, max 6)</div>
+      <div class="chk"><input type="checkbox" onchange="tally()"><span>The SSD maker uses decimal prefixes: 2 TB = 2 &times; 10<sup>12</sup> bytes.</span></div>
+      <div class="chk"><input type="checkbox" onchange="tally()"><span>Windows measures in binary units (1024s), even though it writes "TB": 1 TiB = 2<sup>40</sup> bytes.</span></div>
+      <div class="chk"><input type="checkbox" onchange="tally()"><span>Calculation: 2 &times; 10<sup>12</sup> &divide; 2<sup>40</sup> &asymp; 1.82, which Windows shows as 1.81 — the same amount of space.</span></div>
+      <div class="chk"><input type="checkbox" onchange="tally()"><span>Broadband is sold in megabits per second (lower-case b), but downloads are shown in megabytes per second (capital B).</span></div>
+      <div class="chk"><input type="checkbox" onchange="tally()"><span>Calculation: 100 Mbps &divide; 8 = 12.5 MB/s, so about 12 MB/s is the full speed.</span></div>
+      <div class="chk"><input type="checkbox" onchange="tally()"><span>Extra detail: some capacity is also used by network overheads / the operating system, so slightly lower figures are normal.</span></div>
+      <div class="chk"><input type="checkbox" onchange="tally()"><span>Clear conclusion that neither product is faulty and the customer has not been cheated.</span></div>
+      <div id="tally" style="font-weight:700;color:#007BA6;margin:6px 0 14px;">Your score: 0 / 6</div>
+      <div style="font-weight:700;color:#333;margin-bottom:6px;">Model answer</div>
+      <p style="margin:0;line-height:1.7;background:#fff;border-radius:6px;padding:12px 14px;">Thank you for your email. Neither your laptop nor your broadband is faulty — the difference comes from how the numbers are measured. SSD makers use decimal prefixes, so your 2 TB drive holds 2 &times; 10<sup>12</sup> bytes. Windows measures storage in binary units, where one "TB" is really a tebibyte of 2<sup>40</sup> bytes. 2 &times; 10<sup>12</sup> &divide; 2<sup>40</sup> is about 1.82, which Windows displays as 1.81 TB, so all of the space is there. Your broadband speed is given in megabits per second, but downloads are shown in megabytes per second, and there are 8 bits in a byte. 100 Mbps &divide; 8 = 12.5 MB/s, and a little of that is used by the network itself, so about 12 MB/s means you are getting the full speed you pay for.</p>
+    </div>
+  </div>
+</div>
+
+<!-- COPY ANSWERS -->
+<div style="background:#007BA6;border-radius:8px;padding:24px 28px;margin-bottom:20px;color:#fff;">
+  <div style="font-size:16pt;font-weight:700;margin-bottom:8px;">&#128203; Finished? Save your work</div>
+  <div style="font-size:13pt;margin-bottom:6px;">Press the button to copy all your written answers and results, then paste them into your notes or hand-in.</div>
+  <button class="btn" style="background:#fff;color:#007BA6;border-color:#fff;" onclick="copyAll()">Copy all my answers</button>
+  <span id="copyMsg" style="font-size:12.5pt;font-weight:700;margin-left:6px;"></span>
+  <textarea id="copyBox" class="inp" style="display:none;margin-top:12px;min-height:160px;color:#333;" readonly></textarea>
+</div>
+
+</div></div>
+<script>
+// ══════════ MATCH ══════════
+var MATCH_OPTS = { match1: [
+  ['col','16 777 216 colours'],
+  ['ascii','128 characters'],
+  ['x','1024 colours'],
+  ['ip','About 4.3 billion addresses'],
+  ['audio','65 536 loudness levels'],
+  ['grey','256 shades of grey']
+]};
+document.querySelectorAll('#match1 .match-sel').forEach(function(sel) {
+  var h = '<option value="">— choose —</option>';
+  MATCH_OPTS.match1.forEach(function(o){ h += '<option value="' + o[0] + '">' + o[1] + '</option>'; });
+  sel.innerHTML = h;
+});
+function checkMatch1() {
+  var rows = document.querySelectorAll('#match1 .match-row'), allOk = true;
+  rows.forEach(function(row) {
+    row.classList.remove('ok','bad');
+    var sel = row.querySelector('.match-sel');
+    if (sel.value === sel.getAttribute('data-ans')) row.classList.add('ok'); else { row.classList.add('bad'); allOk = false; }
+  });
+  var res = document.getElementById('match1-res');
+  res.style.display = 'block';
+  if (allOk) {
+    res.className = 'result fb-ok';
+    res.innerHTML = '&#10003; All correct! 2<sup>7</sup> = 128, 2<sup>8</sup> = 256, 2<sup>16</sup> = 65 536, 2<sup>24</sup> = 16 777 216 and 2<sup>32</sup> &asymp; 4.3 billion. Running out of 32-bit IPv4 addresses is why the internet is moving to 128-bit IPv6 addresses.';
+    document.getElementById('match1-btn').disabled = true;
+    rows.forEach(function(r){ r.querySelector('.match-sel').disabled = true; });
+  } else {
+    res.className = 'result fb-bad';
+    res.innerHTML = '&#10007; One or more are wrong. Work out 2<sup>n</sup> for each number of bits: remember 2<sup>8</sup> = 256 and each extra bit doubles the total.';
+  }
+}
+
+// ══════════ MCQ ══════════
+var mcqChosen = {};
+var MCQ_CORRECT = { 4:'b', 5:'c', 7:'c' };
+var MCQ_FB = {
+  4:{
+    ok:'&#10003; Correct! Windows labels sizes with "MB" but calculates with 1024, so "1.00 MB" in Windows is really 1 MiB = 1024 &times; 1024 = 1 048 576 bytes.',
+    a:'&#10007; That would be a decimal megabyte. Windows calculates with 1024, so its "1 MB" is 1024 &times; 1024 = 1 048 576 bytes.',
+    c:'&#10007; This mixes the two systems (1000 &times; 1024). Windows uses 1024 &times; 1024 = 1 048 576 bytes.',
+    d:'&#10007; 8 388 608 is the number of <em>bits</em> in 1 MiB. The number of bytes is 1 048 576.'
+  },
+  5:{
+    ok:'&#10003; Correct! For years "kilobyte" could mean 1000 or 1024 bytes depending on who was speaking. The IEC created kibi (Ki), mebi (Mi), gibi (Gi) and tebi (Ti) so that binary amounts had their own names.',
+    a:'&#10007; Computers have always used binary. The problem was that "kilo" was being used for both 1000 and 1024.',
+    b:'&#10007; Prefixes are just names — they do not change how devices are made. They were created to remove the confusion between 1000 and 1024.',
+    d:'&#10007; Hex is a number base, not a unit. The new prefixes removed the confusion between 1000 and 1024.'
+  },
+  7:{
+    ok:'&#10003; Correct! The 1 Gbps line is 20 times faster than 50 Mbps, and the film took 20 times less time (117.4 s &rarr; 5.9 s). Treating 4 GiB as 4 GB gave 400 s instead of 429.5 s — out by 29.5 s, about 7%.',
+    a:'&#10007; Check tests 1 and 2: the faster connection made the download <em>quicker</em>, from 117.4 s to 5.9 s.',
+    b:'&#10007; Test 4 showed a difference of 29.5 seconds, so the prefix does matter.',
+    d:'&#10007; Tests 1 and 2 used the same file but different speeds, and the times were very different.'
+  }
+};
+function pickOpt(qNum, letter, el) {
+  if (mcqChosen[qNum]) return;
+  mcqChosen[qNum] = true;
+  var correct = MCQ_CORRECT[qNum], isOk = (letter === correct);
+  var box = document.getElementById('opts' + qNum), fb = document.getElementById('fb' + qNum);
+  box.querySelectorAll('.opt').forEach(function(o) {
+    o.classList.add('locked');
+    var m = o.getAttribute('onclick').match(/pickOpt\(\d+,'([a-d])'/), v = m ? m[1] : '';
+    if (v === correct) o.classList.add(isOk ? 'correct' : 'reveal');
+    else if (v === letter && !isOk) o.classList.add('wrong');
+  });
+  fb.style.display = 'block';
+  fb.className = 'fb ' + (isOk ? 'fb-ok' : 'fb-bad');
+  fb.innerHTML = isOk ? MCQ_FB[qNum].ok : (MCQ_FB[qNum][letter] || '&#10007; Not quite — the correct answer is highlighted in green above.');
+}
+
+// ══════════ NOTES / MARK SCHEME ══════════
+function showNotes(id) { document.getElementById(id).style.display = 'block'; }
+function tally() {
+  var n = document.querySelectorAll('#model input:checked').length;
+  document.getElementById('tally').textContent = 'Your score: ' + Math.min(n, 6) + ' / 6';
+}
+
+// ══════════ COLOUR DECODER ══════════
+function clamp(v) { v = parseInt(v, 10); return isNaN(v) ? null : Math.max(0, Math.min(255, v)); }
+function hex2(v) { return ('0' + v.toString(16)).slice(-2).toUpperCase(); }
+function previewColour() {
+  var r = clamp(document.getElementById('c1r').value), g = clamp(document.getElementById('c1g').value), b = clamp(document.getElementById('c1b').value);
+  document.getElementById('sw1').style.background = (r === null || g === null || b === null) ? '#fff' : '#' + hex2(r) + hex2(g) + hex2(b);
+  var h = document.getElementById('c2').value.replace(/[#\s]/g, '');
+  document.getElementById('sw2').style.background = /^[0-9a-fA-F]{6}$/.test(h) ? '#' + h : '#fff';
+}
+function checkColours() {
+  var want = { c1r:'76', c1g:'175', c1b:'80', c2:'007BA6' }, wrong = [], empty = false;
+  var hints = {
+    c1r:'Red: 4C = 4 &times; 16 + 12 = <strong>76</strong>.',
+    c1g:'Green: AF = 10 &times; 16 + 15 = <strong>175</strong>.',
+    c1b:'Blue: 50 = 5 &times; 16 + 0 = <strong>80</strong>.',
+    c2:'0 = <strong>00</strong>; 123 &divide; 16 = 7 r 11 = <strong>7B</strong>; 166 &divide; 16 = 10 r 6 = <strong>A6</strong>.'
+  };
+  Object.keys(want).forEach(function(id) {
+    var el = document.getElementById(id), v = el.value.replace(/[#\s]/g, '').toUpperCase();
+    el.classList.remove('ok','bad');
+    if (!v) { empty = true; return; }
+    if (v === want[id]) el.classList.add('ok'); else { el.classList.add('bad'); wrong.push(hints[id]); }
+  });
+  var res = document.getElementById('res2');
+  res.style.display = 'block';
+  if (empty) { res.className = 'result fb-bad'; res.innerHTML = '&#10007; Fill in all four boxes first.'; return; }
+  if (!wrong.length) {
+    res.className = 'result fb-ok';
+    res.innerHTML = '&#10003; Both colours cracked! #4CAF50 = rgb(76, 175, 80) and rgb(0, 123, 166) = #007BA6. Your swatches should now match. Each pair of hex digits is one byte, so a colour code holds 24 bits.';
+  } else {
+    res.className = 'result fb-bad';
+    res.innerHTML = '&#10007; Not quite — fix the boxes in red. ' + wrong.slice(0, 2).join(' ');
+  }
+}
+
+// ══════════ DOWNLOAD LAB ══════════
+function fmt(n) { return n.toLocaleString('en-GB', { maximumFractionDigits: 3 }); }
+function runLab() {
+  var size = parseFloat(document.getElementById('fs').value), fu = parseFloat(document.getElementById('fu').value);
+  var speed = parseFloat(document.getElementById('sp').value), su = parseFloat(document.getElementById('su').value);
+  var out = document.getElementById('labOut');
+  if (!(size > 0) || !(speed > 0)) { out.innerHTML = '<span style="color:#f38ba8;">Enter a file size and a speed greater than 0.</span>'; return; }
+  var fuName = document.getElementById('fu').selectedOptions[0].text, suName = document.getElementById('su').selectedOptions[0].text;
+  var bytes = size * fu, bits = bytes * 8, bps = speed * su, t = bits / bps;
+  var mins = Math.floor(t / 60), secs = t - mins * 60;
+  out.innerHTML =
+    '1. File size in bytes: ' + fmt(size) + ' ' + fuName + ' &times; ' + fmt(fu) + ' = <b>' + fmt(bytes) + '</b> bytes<br>' +
+    '2. File size in bits: ' + fmt(bytes) + ' &times; 8 = <b>' + fmt(bits) + '</b> bits<br>' +
+    '3. Speed in bits per second: ' + fmt(speed) + ' ' + suName + ' &times; ' + fmt(su) + ' = <b>' + fmt(bps) + '</b> bps<br>' +
+    '4. Time = bits &divide; bits per second' +
+    '<div class="lab-big">&#9201; ' + fmt(Math.round(t * 1000) / 1000) + ' seconds' + (mins > 0 ? ' (' + mins + ' min ' + secs.toFixed(1) + ' s)' : '') + '</div>';
+}
+function labTime(bytes, bps) { return bytes * 8 / bps; }
+function checkLab() {
+  var exp = [
+    labTime(700 * Math.pow(2, 20), 50e6),
+    labTime(700 * Math.pow(2, 20), 1e9),
+    labTime(4 * Math.pow(2, 30), 80e6),
+    labTime(4 * Math.pow(2, 30), 80e6) - labTime(4e9, 80e6)
+  ].map(function(v){ return Math.round(v * 10) / 10; });
+  var hints = [
+    'Test 1: 700 &times; 2<sup>20</sup> &times; 8 &divide; (50 &times; 10<sup>6</sup>) = <strong>117.4 s</strong>.',
+    'Test 2: 1 Gbps = 10<sup>9</sup> bps, so 700 &times; 2<sup>20</sup> &times; 8 &divide; 10<sup>9</sup> = <strong>5.9 s</strong>.',
+    'Test 3: 4 &times; 2<sup>30</sup> &times; 8 &divide; (80 &times; 10<sup>6</sup>) = <strong>429.5 s</strong>.',
+    'Test 4: with 4 GB = 4 &times; 10<sup>9</sup> bytes the time is 400 s, so 429.5 &minus; 400 = <strong>29.5 s</strong>.'
+  ];
+  var wrong = [], empty = false;
+  [1,2,3,4].forEach(function(i) {
+    var el = document.getElementById('r' + i), v = parseFloat(el.value.replace(/,/g, ''));
+    el.classList.remove('ok','bad');
+    if (el.value.trim() === '') { empty = true; return; }
+    if (Math.abs(v - exp[i - 1]) <= 0.15) el.classList.add('ok'); else { el.classList.add('bad'); wrong.push(hints[i - 1]); }
+  });
+  var res = document.getElementById('res6');
+  res.style.display = 'block';
+  if (empty) { res.className = 'result fb-bad'; res.innerHTML = '&#10007; Fill in all four results first.'; return; }
+  if (!wrong.length) {
+    res.className = 'result fb-ok';
+    res.innerHTML = '&#10003; All four results are correct! Notice how much faster full fibre is, and how big the error becomes when a binary prefix is mistaken for a decimal one.';
+  } else {
+    res.className = 'result fb-bad';
+    res.innerHTML = '&#10007; Some results (in red) do not match. ' + wrong.slice(0, 2).join(' ') + ' Use the lab to check each step.';
+  }
+}
+
+// ══════════ COPY ALL ANSWERS ══════════
+function copyAll() {
+  var out = ['Number Bases & Units of Measurement – Develop Task', ''];
+  document.querySelectorAll('[data-q]').forEach(function(el) {
+    out.push('[' + el.getAttribute('data-q') + ']');
+    out.push(el.value.trim() || '(no answer)');
+    out.push('');
+  });
+  var text = out.join('\n'), msg = document.getElementById('copyMsg'), box = document.getElementById('copyBox');
+  box.value = text; box.style.display = 'block';
+  function fallback() { box.focus(); box.select(); try { document.execCommand('copy'); msg.textContent = 'Copied! Paste it into your notes.'; } catch (e) { msg.textContent = 'Select the text below and copy it.'; } }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function(){ msg.textContent = 'Copied! Paste it into your notes.'; }, fallback);
+  } else fallback();
+}
+</script>
+</body>
+</html>
